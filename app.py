@@ -18,9 +18,9 @@ net = cv2.dnn.readNetFromONNX("models/best.onnx")
 CLASSES = ['knife', 'gun']
 
 # Email setup
-sender_email = "gyanutiwari758@gmail.com"
-receiver_email = "2023281975.abhinav@ug.sharda.ac.in"
-password = "qynqulodegxqdhai"
+sender_email = "******@gmail.com"
+receiver_email = "******@gmail.com"
+password = "******"
 
 # Detection stats and logs
 detection_stats = {"gun": 0, "knife": 0}
