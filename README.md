@@ -1,142 +1,124 @@
+# 🔫 Weapon Detection using YOLOv5
 
-<div align="center">
+A real-time weapon detection system using the YOLOv5 object detection algorithm. This project uses a custom-trained model on a dataset of weapons (guns, knives) to identify potential threats in images, videos, or live webcam feeds.
 
+---
 
-  **Open in**
-  <br>
-  <div>
-    <a href="https://colab.research.google.com/drive/1u9rAhzFOoPc7SD-XDmrhU7Rv0U3lkg7B?usp=share_link"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
-    <a href="https://www.kaggle.com/saifkhan04/weapon-detection-mail-alerts"><img src="https://kaggle.com/static/images/open-in-kaggle.svg" alt="Open In Kaggle"></a>
-    
-  </div>
+## 📁 Project Structure
 
-  <br>
-  <p>
-   It is a YOLOv5 🚀 weapon detection model trained on custom dataset for detecting the weapons in real life and alarm system.
-  </p>
+```
+├── yolov5/                       # YOLOv5 repo
+├── weapon-dataset/              # Custom dataset
+│   ├── train/
+│   ├── valid/
+│   ├── test/
+│   └── data.yaml
+├── runs/                        # Training results
+│   └── train/weapon_detector/
+└── detect.py                    # Detection script
+```
 
-</div>
+---
 
+## 🚀 Features
 
+- 🔍 Detects weapons (e.g., guns and knives) in real-time
+- 🎥 Supports image, video, and webcam inputs
+- 🧠 Custom-trained YOLOv5 model
+- 📊 Tracks confidence, bounding boxes, and results
 
+---
 
-## <div align="center">Quick Start Examples</div>
+## 📦 Requirements
 
-<details open>
-<summary><strong>Install</strong></summary>
-
-Clone repo and install [requirements.txt](https://github.com/ultralytics/yolov5/blob/master/requirements.txt) in a
-[**Python>=3.7.0**](https://www.python.org/) environment, including
-[**PyTorch>=1.7**](https://pytorch.org/get-started/locally/).
+Install dependencies:
 
 ```bash
-git clone https://github.com/K-saif/Weapon-Detection-Mail-Alerts.git  # clone
-cd Weapon-Detection-Mail-Alerts
-pip install -r requirements.txt  # install
+pip install -r requirements.txt
 ```
-</details>
 
-<details open>
-<summary><strong>Mail Bot</strong></summary>
+(Inside `yolov5/`)
 
+---
 
-**Step-1:**
-For sending automatic Email first we need to turn on 2-step verification to get a 16 character password that we can use to log in to Gmail using Python, follow the steps [here](https://support.google.com/accounts/answer/185833?hl=en).
+## 📥 Dataset
 
-**step-2:**
-Copy and paste that password in the [auto_mail.py](https://github.com/K-saif/Weapon-Detection-Mail-Alerts/blob/bcd0e3f60c66db6210600df0eef02bed06b659f4/auto_mail.py)
+The dataset was downloaded and customized using [Roboflow](https://universe.roboflow.com/).
 
-<kbd>
-<img align="left" width="300" height="300" src="https://user-images.githubusercontent.com/110802306/216804975-514c8388-5537-49bd-b4af-706d57198b3f.png">
-</kbd>
+Includes:
+- Images with YOLOv5 TXT annotations
+- Custom `data.yaml` with classes: `gun`, `knife`
 
-</details>
+---
 
+## 🏋️‍♂️ Training
 
-<details>
-<summary><strong>Training</strong></summary>
-For training, use below command 
+Run this command to train:
 
 ```bash
-python train.py --img 640 --batch 16 --epochs 30 --data custom_data.yaml --weights '' --cache
+python train.py --img 640 --batch 16 --epochs 50 --data weapon-dataset/data.yaml --weights yolov5s.pt --name weapon_detector
 ```
-Note: provide file name and path properly
 
+---
 
-<kbd>
-<img align="left" width="300" height="300" src="https://user-images.githubusercontent.com/110802306/216806567-8c9ff57e-b891-44e8-b527-585b1f019c9e.png">
-</kbd>
+## 🎯 Inference / Detection
 
-
-
-</details>
-
-<details>
-<summary><strong>Training Results</strong></summary>
-
-**Graphs:**
-
-<kbd>
-<img width="800" src="https://user-images.githubusercontent.com/110802306/216755099-15837611-b1bc-47af-9a2b-da78716a3fba.png">
-</kbd>
-
-**Output:**
-
-<kbd>
-<img width="600" src="https://user-images.githubusercontent.com/110802306/216756077-d4a55c94-d15d-4b80-a179-72f89c34ab15.jpg">
-</kbd>
-</details>
-
-
-<details>
-<summary><strong>Inference with detect.py</strong></summary>
-
-`detect.py` runs inference on a variety of sources and saving results to `runs/detect`.
+Run detection on webcam, image, or video:
 
 ```bash
-python detect.py --source 0  # webcam
-                          img.jpg  # image
-                          vid.mp4  # video
-                          path/  # directory
-                          'path/*.jpg'  # glob
-                          'https://youtu.be/'  # YouTube
-                          'rtsp://abc.com/weapon.mp4'  # RTSP, RTMP, HTTP stream
+# Webcam
+python detect.py --weights runs/train/weapon_detector/weights/best.pt --source 0
+
+# Image
+python detect.py --weights runs/train/weapon_detector/weights/best.pt --source path/to/image.jpg
+
+# Video
+python detect.py --weights runs/train/weapon_detector/weights/best.pt --source path/to/video.mp4
 ```
-</details>
 
-<details>
-<summary><strong>Detection</strong></summary>
-For detection, use below command
+Detected results are saved in `runs/detect/`.
 
-```bash
-python detect.py --weights best.pt --img 640 --conf 0.5 --source image.jpg
-```
-Note: provide file name and path properly
-</details>
+---
 
+## 🧠 Classes Detected
 
+- `gun`
+- `knife`
 
-## <div align="center">Environments</div>
+(Modify in `data.yaml` as needed)
 
-Get started in seconds with our verified environments. Click each icon below for details.
+---
 
-<div align="center">
-  <a href="https://colab.research.google.com/drive/1u9rAhzFOoPc7SD-XDmrhU7Rv0U3lkg7B?usp=share_link">
-    <img src="https://github.com/ultralytics/yolov5/releases/download/v1.0/logo-colab-small.png" width="10%" /></a>
-  <img src="https://github.com/ultralytics/assets/raw/master/social/logo-transparent.png" width="5%" alt="" />
-  <a href="https://www.kaggle.com/saifkhan04/weapon-detection-mail-alerts">
-    <img src="https://github.com/ultralytics/yolov5/releases/download/v1.0/logo-kaggle-small.png" width="10%" /></a>
-  <img src="https://github.com/ultralytics/assets/raw/master/social/logo-transparent.png" width="5%" alt="" />
-</div>
+## 📊 Results
 
+Training accuracy, loss, and mAP graphs are saved in `runs/train/weapon_detector/`.
 
-## <div align="center">Contribute</div>
+You can visualize predictions in `runs/detect/`.
 
-Our Contributors are,
+---
 
-<!-- SVG image from https://opencollective.com/ultralytics/contributors.svg?width=990 -->
-<a href="https://github.com/ultralytics/yolov5/graphs/contributors"><img src="" /></a>
+## 🛠 Future Improvements
 
+- Add alert system (buzzer/email notification)
+- Deploy on edge devices (e.g., Jetson Nano, Raspberry Pi)
+- Train on more diverse dataset (other weapons, scenarios)
 
+---
 
-## <div align="center">Contact</div>
+## 🙌 Acknowledgements
+
+- [Ultralytics YOLOv5](https://github.com/ultralytics/yolov5)
+- [Roboflow Datasets](https://universe.roboflow.com/)
+- OpenCV, PyTorch, and the AI/ML community
+
+---
+
+## 📸 Demo
+
+> *(Add screenshots or a short video/GIF here if you can)*
+
+---
+
+## 💬 License
+
+This project is for educational/research purposes only. Use responsibly.
